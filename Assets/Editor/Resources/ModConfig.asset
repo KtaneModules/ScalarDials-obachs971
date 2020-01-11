@@ -11,10 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
   m_Name: ModConfig
   m_EditorClassIdentifier: 
-  id: digitalDials
-  title: Digital Dials
+  id: scalarDials
+  title: Scalar Dials
   author: Sean Obach
-  description: 'Github: https://github.com/obachs971/DigitalDials'
+  description: 'Github: https://github.com/obachs971/ScalarDials
+
+
+    Twitch playable.'
   version: 1.0
   outputFolder: build
   previewImage: {fileID: 2800000, guid: c3c6ae5f781772e47beaaf686f7fbea9, type: 3}
