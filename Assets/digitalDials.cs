@@ -294,7 +294,7 @@ public class digitalDials : MonoBehaviour
             {
                 if (mainNotes[aa].EqualsIgnoreCase(table2[clefNum][bb]))
                     n1 = bb;
-                else if (displayNotes[aa][DialPosAns[aa]].EqualsIgnoreCase(table2[clefNum][bb]))
+                if (displayNotes[aa][DialPosAns[aa]].EqualsIgnoreCase(table2[clefNum][bb]))
                     n2 = bb;
                 if (n1 >= 0 && n2 >= 0)
                     break;
@@ -386,7 +386,7 @@ public class digitalDials : MonoBehaviour
                 {
                     if (dialNotes[aa][DialPosAns[aa]].EqualsIgnoreCase(noteList[bb][cc]))
                         n1 = bb;
-                    else if (displayNotes[aa][DialPosAns[aa]].Split(' ')[0].EqualsIgnoreCase(noteList[bb][cc]))
+                    if (displayNotes[aa][DialPosAns[aa]].Split(' ')[0].EqualsIgnoreCase(noteList[bb][cc]))
                         n2 = bb;
                 }
                 if (n1 >= 0 && n2 >= 0)
@@ -523,7 +523,7 @@ public class digitalDials : MonoBehaviour
             if (DialPos[0] == DialPosAns[0] && DialPos[1] == DialPosAns[1] && DialPos[2] == DialPosAns[2] && (int)(bomb.GetTime() % 10) == submitTime)
             {
                 audio.PlaySoundAtTransform(sounds[1].name, transform);
-                Debug.LogFormat("[Digital Dials {0}] Module solved. Everybody boogie!", moduleId);
+                Debug.LogFormat("[Scalar Dials #{0}] Module solved. Everybody boogie!", moduleId);
                 mainScreen.text = "";
                 for (int aa = 0; aa < 3; aa++)
                 {
@@ -542,7 +542,7 @@ public class digitalDials : MonoBehaviour
             {
                 audio.PlaySoundAtTransform(sounds[0].name, transform);
                 module.HandleStrike();
-                Debug.LogFormat("[Digital Dials {0}] Strike! You tried to submit {1} {2} {3} at {4} seconds", moduleId, DialPos[0], DialPos[1], DialPos[2], (int)(bomb.GetTime() % 10));
+                Debug.LogFormat("[Scalar Dials #{0}] Strike! You tried to submit {1} {2} {3} at {4} seconds", moduleId, DialPos[0], DialPos[1], DialPos[2], (int)(bomb.GetTime() % 10));
             }
         }
     }
@@ -645,5 +645,19 @@ public class digitalDials : MonoBehaviour
         }
         if(flag)
             yield return "sendtochat The command you sent wasn't executed because the dials were confused/scared.";
+    }
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            while (DialPos[i] != DialPosAns[i])
+            {
+                dials[i].OnInteract();
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        while (((int)(bomb.GetTime())) % 10 != submitTime) yield return true;
+        submit.OnInteract();
+        yield return new WaitForSeconds(0.1f);
     }
 }
